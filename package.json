@@ -1,5 +1,5 @@
 {
-  "name": "hrnet-employees-table",
+  "name": "hrnet-employee-table",
   "version": "1.0.0",
   "description": "Made with create-react-library",
   "author": "LaurentHrt",
@@ -24,7 +24,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^16.0.0"
+    "react": "^17.0.2"
   },
   "devDependencies": {
     "microbundle-crl": "^0.13.10",

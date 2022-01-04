@@ -1,10 +1,9 @@
 import React from 'react';
 
-function EmployeesTable({
-  employees
-}) {
-  const data = employees;
-  const columns = [{
+function EmployeesTable(_ref) {
+  var employees = _ref.employees;
+  var data = employees;
+  var columns = [{
     Header: 'First Name',
     accessor: 'firstname'
   }, {
@@ -32,13 +31,19 @@ function EmployeesTable({
     Header: 'Department',
     accessor: 'department'
   }];
-  return /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, columns.map(column => /*#__PURE__*/React.createElement("th", {
-    key: column.accessor
-  }, column.Header)))), /*#__PURE__*/React.createElement("tbody", null, data.map((row, idx) => /*#__PURE__*/React.createElement("tr", {
-    key: idx
-  }, Object.values(row).map((cell, idx) => /*#__PURE__*/React.createElement("td", {
-    key: idx
-  }, cell))))));
+  return /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, columns.map(function (column) {
+    return /*#__PURE__*/React.createElement("th", {
+      key: column.accessor
+    }, column.Header);
+  }))), /*#__PURE__*/React.createElement("tbody", null, data.map(function (row, idx) {
+    return /*#__PURE__*/React.createElement("tr", {
+      key: idx
+    }, Object.values(row).map(function (cell, idx) {
+      return /*#__PURE__*/React.createElement("td", {
+        key: idx
+      }, cell);
+    }));
+  })));
 }
 
 export default EmployeesTable;
