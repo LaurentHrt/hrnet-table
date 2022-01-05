@@ -3,6 +3,8 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = require('react');
 var React__default = _interopDefault(React);
 
+var styles = {"controlsContainer":"_styles-module__controlsContainer__2gR4P"};
+
 function EmployeesTable(_ref) {
   var data = _ref.data,
       columns = _ref.columns;
@@ -15,12 +17,16 @@ function EmployeesTable(_ref) {
       entriesDisplayed = _useState2[0],
       setEntriesDisplayed = _useState2[1];
 
-  var totalEntries = data.length;
+  var _useState3 = React.useState(data),
+      displayedData = _useState3[0],
+      setDisplayedData = _useState3[1];
+
+  var totalEntries = displayedData.length;
   var totalPages = Math.ceil(totalEntries / entriesDisplayed);
 
   var createDataChunks = function createDataChunks(chunkSize) {
     var chunkList = [];
-    var datas = data.slice();
+    var datas = displayedData.slice();
 
     while (datas.length) {
       chunkList.push(datas.splice(0, chunkSize));
@@ -29,14 +35,9 @@ function EmployeesTable(_ref) {
     return chunkList;
   };
 
-  var _useState3 = React.useState(createDataChunks(entriesDisplayed)),
-      displayedData = _useState3[0],
-      setDisplayedData = _useState3[1];
-
   var onEntriesDisplayedChange = function onEntriesDisplayedChange(e) {
     setEntriesDisplayed(e.target.value);
     setCurrentPage(1);
-    setDisplayedData(createDataChunks(e.target.value));
   };
 
   var previousPage = function previousPage() {
@@ -51,7 +52,18 @@ function EmployeesTable(_ref) {
     }
   };
 
-  return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("select", {
+  var handleSearchChange = function handleSearchChange(e) {
+    var datas = data.slice().filter(function (employee) {
+      return employee.firstname.toLowerCase().includes(e.target.value.toLowerCase());
+    });
+    setDisplayedData(datas);
+    setCurrentPage(1);
+    console.log(currentPage);
+  };
+
+  return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("div", {
+    className: styles.controlsContainer
+  }, /*#__PURE__*/React__default.createElement("select", {
     onChange: onEntriesDisplayedChange,
     value: entriesDisplayed
   }, /*#__PURE__*/React__default.createElement("option", {
@@ -66,14 +78,15 @@ function EmployeesTable(_ref) {
     value: 50
   }, "50"), /*#__PURE__*/React__default.createElement("option", {
     value: 100
-  }, "100")), /*#__PURE__*/React__default.createElement("input", {
+  }, "100"))), /*#__PURE__*/React__default.createElement("input", {
     type: "text",
-    placeholder: "Search"
+    placeholder: "Search",
+    onChange: handleSearchChange
   }), /*#__PURE__*/React__default.createElement("table", null, /*#__PURE__*/React__default.createElement("thead", null, /*#__PURE__*/React__default.createElement("tr", null, columns.map(function (column) {
     return /*#__PURE__*/React__default.createElement("th", {
       key: column.accessor
     }, column.Header);
-  }))), /*#__PURE__*/React__default.createElement("tbody", null, displayedData[currentPage - 1].map(function (row, idx) {
+  }))), /*#__PURE__*/React__default.createElement("tbody", null, displayedData.length > 0 ? createDataChunks(entriesDisplayed)[currentPage - 1].map(function (row, idx) {
     return /*#__PURE__*/React__default.createElement("tr", {
       key: idx
     }, Object.values(row).map(function (cell, idx) {
@@ -81,11 +94,11 @@ function EmployeesTable(_ref) {
         key: idx
       }, cell);
     }));
-  }))), /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("p", null)), /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("button", {
+  }) : /*#__PURE__*/React__default.createElement("tr", null, /*#__PURE__*/React__default.createElement("td", null, "No matching records found")))), /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("button", {
     onClick: previousPage
   }, "Previous"), /*#__PURE__*/React__default.createElement("button", {
     onClick: nextPage
-  }, "Next")), /*#__PURE__*/React__default.createElement("div", null, currentPage + " of " + totalPages + " (entries: " + totalEntries + ")"));
+  }, "Next")), /*#__PURE__*/React__default.createElement("div", null, "Page " + currentPage + " of " + totalPages + " (" + totalEntries + " entries)"));
 }
 
 module.exports = EmployeesTable;
