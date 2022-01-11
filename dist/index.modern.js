@@ -47,6 +47,8 @@ function EmployeesTable({
     console.log(currentPage);
   };
 
+  const disablePreviousButton = totalPages <= 1 || currentPage <= 1 ? true : undefined;
+  const disableNextButton = totalPages <= 1 || currentPage >= totalPages ? true : undefined;
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: styles.controlsContainer
   }, /*#__PURE__*/React.createElement("select", {
@@ -75,8 +77,10 @@ function EmployeesTable({
   }, Object.values(row).map((cell, idx) => /*#__PURE__*/React.createElement("td", {
     key: idx
   }, cell)))) : /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, "No matching records found")))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("button", {
+    disabled: disablePreviousButton,
     onClick: previousPage
   }, "Previous"), /*#__PURE__*/React.createElement("button", {
+    disabled: disableNextButton,
     onClick: nextPage
   }, "Next")), /*#__PURE__*/React.createElement("div", null, `Page ${currentPage} of ${totalPages} (${totalEntries} entries)`));
 }

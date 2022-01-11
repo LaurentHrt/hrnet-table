@@ -9616,8 +9616,8 @@
   optionalDependencies:
     "fsevents" "2.1.2"
 
-"react@17.0.2", "react@file:../hrnet-front/node_modules/react":
-  "resolved" "file:../hrnet-front/node_modules/react"
+"react@17.0.2", "react@file:../hrnet/node_modules/react":
+  "resolved" "file:../hrnet/node_modules/react"
   "version" "17.0.2"
   dependencies:
     "loose-envify" "^1.1.0"

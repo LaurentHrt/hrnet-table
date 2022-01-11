@@ -45,6 +45,11 @@ export default function EmployeesTable({ data, columns }) {
     console.log(currentPage)
   }
 
+  const disablePreviousButton =
+    totalPages <= 1 || currentPage <= 1 ? true : undefined
+  const disableNextButton =
+    totalPages <= 1 || currentPage >= totalPages ? true : undefined
+
   return (
     <div>
       <div className={styles.controlsContainer}>
@@ -85,8 +90,12 @@ export default function EmployeesTable({ data, columns }) {
         </tbody>
       </table>
       <div>
-        <button onClick={previousPage}>Previous</button>
-        <button onClick={nextPage}>Next</button>
+        <button disabled={disablePreviousButton} onClick={previousPage}>
+          Previous
+        </button>
+        <button disabled={disableNextButton} onClick={nextPage}>
+          Next
+        </button>
       </div>
       <div>{`Page ${currentPage} of ${totalPages} (${totalEntries} entries)`}</div>
     </div>
