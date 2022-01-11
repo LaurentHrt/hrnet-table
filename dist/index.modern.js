@@ -44,7 +44,10 @@ function EmployeesTable({
     const datas = data.slice().filter(employee => employee.firstname.toLowerCase().includes(e.target.value.toLowerCase()));
     setDisplayedData(datas);
     setCurrentPage(1);
-    console.log(currentPage);
+  };
+
+  const handleHeaderClick = e => {
+    console.log(e.target.attributes.value.value);
   };
 
   const disablePreviousButton = totalPages <= 1 || currentPage <= 1 ? true : undefined;
@@ -71,7 +74,9 @@ function EmployeesTable({
     placeholder: "Search",
     onChange: handleSearchChange
   }), /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, columns.map(column => /*#__PURE__*/React.createElement("th", {
-    key: column.accessor
+    onClick: e => handleHeaderClick(e),
+    key: column.accessor,
+    value: column.accessor
   }, column.Header)))), /*#__PURE__*/React.createElement("tbody", null, displayedData.length > 0 ? createDataChunks(entriesDisplayed)[currentPage - 1].map((row, idx) => /*#__PURE__*/React.createElement("tr", {
     key: idx
   }, Object.values(row).map((cell, idx) => /*#__PURE__*/React.createElement("td", {

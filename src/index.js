@@ -42,7 +42,12 @@ export default function EmployeesTable({ data, columns }) {
       )
     setDisplayedData(datas)
     setCurrentPage(1)
-    console.log(currentPage)
+  }
+
+  const handleHeaderClick = (e) => {
+    console.log(e.target.attributes.value.value)
+    // const datas = displayedData.slice().sort((a, b) => a.zip - b.zip)
+    // setDisplayedData(datas)
   }
 
   const disablePreviousButton =
@@ -67,7 +72,13 @@ export default function EmployeesTable({ data, columns }) {
         <thead>
           <tr>
             {columns.map((column) => (
-              <th key={column.accessor}>{column.Header}</th>
+              <th
+                onClick={(e) => handleHeaderClick(e)}
+                key={column.accessor}
+                value={column.accessor}
+              >
+                {column.Header}
+              </th>
             ))}
           </tr>
         </thead>

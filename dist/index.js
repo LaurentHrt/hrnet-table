@@ -58,7 +58,10 @@ function EmployeesTable(_ref) {
     });
     setDisplayedData(datas);
     setCurrentPage(1);
-    console.log(currentPage);
+  };
+
+  var handleHeaderClick = function handleHeaderClick(e) {
+    console.log(e.target.attributes.value.value);
   };
 
   var disablePreviousButton = totalPages <= 1 || currentPage <= 1 ? true : undefined;
@@ -86,7 +89,11 @@ function EmployeesTable(_ref) {
     onChange: handleSearchChange
   }), /*#__PURE__*/React__default.createElement("table", null, /*#__PURE__*/React__default.createElement("thead", null, /*#__PURE__*/React__default.createElement("tr", null, columns.map(function (column) {
     return /*#__PURE__*/React__default.createElement("th", {
-      key: column.accessor
+      onClick: function onClick(e) {
+        return handleHeaderClick(e);
+      },
+      key: column.accessor,
+      value: column.accessor
     }, column.Header);
   }))), /*#__PURE__*/React__default.createElement("tbody", null, displayedData.length > 0 ? createDataChunks(entriesDisplayed)[currentPage - 1].map(function (row, idx) {
     return /*#__PURE__*/React__default.createElement("tr", {
