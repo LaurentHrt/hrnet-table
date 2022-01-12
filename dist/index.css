@@ -1,6 +1,6 @@
 /* add css module styles here (optional) */
 
-._styles-module__table__FnYjQ {
+._FnYjQ {
   /* width: 890px; */
   margin: 0 auto;
   border-collapse: separate;
@@ -9,24 +9,28 @@
   border-bottom: 1px solid #111;
 }
 
-._styles-module__th__2MlMJ {
+._2MlMJ {
   padding: 10px 18px;
   border-bottom: 1px solid #111;
 }
 
-._styles-module__td__qcjXT {
+._qcjXT {
   padding: 8px 10px;
   border-top: 1px solid #ddd;
 }
 
-._styles-module__controlsBar__vj6nK {
+._kcP3k:hover {
+  background-color: #ddd;
+}
+
+._vj6nK {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 10px;
 }
 
-._styles-module__paginationContainer__34dm0 {
+._34dm0 {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

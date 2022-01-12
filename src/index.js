@@ -79,6 +79,21 @@ export default function EmployeesTable({ data, columns }) {
     // setDisplayedData(datas)
   }
 
+  const createPaginationButtons = (pageNumber) => {
+    const buttons = []
+    for (let i = 1; i <= totalPages; i++) {
+      buttons.push(
+        <button
+          disabled={currentPage === i ? true : undefined}
+          onClick={() => setCurrentPage(i)}
+        >
+          {i}
+        </button>
+      )
+    }
+    return buttons
+  }
+
   const disablePreviousButton =
     totalPages <= 1 || currentPage <= 1 ? true : undefined
   const disableNextButton =
@@ -134,7 +149,7 @@ export default function EmployeesTable({ data, columns }) {
           {displayedData.length > 0 ? (
             createDataChunks(entriesDisplayed)[currentPage - 1].map(
               (row, idx) => (
-                <tr key={idx}>
+                <tr className={styles.tr} key={idx}>
                   {Object.values(row).map((cell, idx) => (
                     <td className={styles.td} key={idx}>
                       {cell}
@@ -156,8 +171,8 @@ export default function EmployeesTable({ data, columns }) {
           <button disabled={disablePreviousButton} onClick={previousPage}>
             Previous
           </button>
-          <button>1</button>
-          <button>2</button>
+          {}
+          {createPaginationButtons(totalPages)}
           <button disabled={disableNextButton} onClick={nextPage}>
             Next
           </button>

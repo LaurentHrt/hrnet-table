@@ -19,6 +19,10 @@
   border-top: 1px solid #ddd;
 }
 
+.tr:hover {
+  background-color: #ddd;
+}
+
 .controlsBar {
   display: flex;
   flex-direction: row;

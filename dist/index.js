@@ -3,7 +3,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = require('react');
 var React__default = _interopDefault(React);
 
-var styles = {"table":"_styles-module__table__FnYjQ","th":"_styles-module__th__2MlMJ","td":"_styles-module__td__qcjXT","controlsBar":"_styles-module__controlsBar__vj6nK","paginationContainer":"_styles-module__paginationContainer__34dm0"};
+var styles = {"table":"_FnYjQ","th":"_2MlMJ","td":"_qcjXT","tr":"_kcP3k","controlsBar":"_vj6nK","paginationContainer":"_34dm0"};
 
 function EmployeesTable(_ref) {
   var data = _ref.data,
@@ -66,6 +66,25 @@ function EmployeesTable(_ref) {
     console.log(e.target.attributes.value.value);
   };
 
+  var createPaginationButtons = function createPaginationButtons(pageNumber) {
+    var buttons = [];
+
+    var _loop = function _loop(i) {
+      buttons.push( /*#__PURE__*/React__default.createElement("button", {
+        disabled: currentPage === i ? true : undefined,
+        onClick: function onClick() {
+          return setCurrentPage(i);
+        }
+      }, i));
+    };
+
+    for (var i = 1; i <= totalPages; i++) {
+      _loop(i);
+    }
+
+    return buttons;
+  };
+
   var disablePreviousButton = totalPages <= 1 || currentPage <= 1 ? true : undefined;
   var disableNextButton = totalPages <= 1 || currentPage >= totalPages ? true : undefined;
   return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("div", {
@@ -102,6 +121,7 @@ function EmployeesTable(_ref) {
     }, column.Header);
   }))), /*#__PURE__*/React__default.createElement("tbody", null, displayedData.length > 0 ? createDataChunks(entriesDisplayed)[currentPage - 1].map(function (row, idx) {
     return /*#__PURE__*/React__default.createElement("tr", {
+      className: styles.tr,
       key: idx
     }, Object.values(row).map(function (cell, idx) {
       return /*#__PURE__*/React__default.createElement("td", {
@@ -114,7 +134,7 @@ function EmployeesTable(_ref) {
   }, /*#__PURE__*/React__default.createElement("div", null, "Showing " + showingFirst + " to " + showingLast + " of " + totalEntries + " entries"), /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("button", {
     disabled: disablePreviousButton,
     onClick: previousPage
-  }, "Previous"), /*#__PURE__*/React__default.createElement("button", null, "1"), /*#__PURE__*/React__default.createElement("button", null, "2"), /*#__PURE__*/React__default.createElement("button", {
+  }, "Previous"), createPaginationButtons(), /*#__PURE__*/React__default.createElement("button", {
     disabled: disableNextButton,
     onClick: nextPage
   }, "Next"))));

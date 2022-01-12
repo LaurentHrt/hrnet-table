@@ -1,10 +1,10 @@
 {
-  "name": "hrnet-employee-table",
-  "version": "1.0.0",
+  "name": "hrnet-table",
+  "version": "1.0.0-rc1",
   "description": "Made with create-react-library",
   "author": "LaurentHrt",
   "license": "MIT",
-  "repository": "LaurentHrt/hrnet-employees-table",
+  "repository": "LaurentHrt/hrnet-table",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
