@@ -1,6 +1,6 @@
 /* add css module styles here (optional) */
 
-._styles-module__table__FnYjQ {
+.table {
   /* width: 890px; */
   margin: 0 auto;
   border-collapse: separate;
@@ -9,24 +9,24 @@
   border-bottom: 1px solid #111;
 }
 
-._styles-module__th__2MlMJ {
+.th {
   padding: 10px 18px;
   border-bottom: 1px solid #111;
 }
 
-._styles-module__td__qcjXT {
+.td {
   padding: 8px 10px;
   border-top: 1px solid #ddd;
 }
 
-._styles-module__controlsBar__vj6nK {
+.controlsBar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 10px;
 }
 
-._styles-module__paginationContainer__34dm0 {
+.paginationContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

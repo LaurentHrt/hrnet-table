@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styles from './styles.module.css'
 
 export default function EmployeesTable({ data, columns }) {
   const [currentPage, setCurrentPage] = useState(1)
@@ -6,6 +7,11 @@ export default function EmployeesTable({ data, columns }) {
   const [displayedData, setDisplayedData] = useState(data)
   const totalEntries = displayedData.length
   const totalPages = Math.ceil(totalEntries / entriesDisplayed)
+  const showingFirst = currentPage * entriesDisplayed - entriesDisplayed + 1
+  const showingLast =
+    showingFirst + parseInt(entriesDisplayed - 1) > totalEntries
+      ? totalEntries
+      : showingFirst + parseInt(entriesDisplayed - 1)
 
   const createDataChunks = (chunkSize) => {
     const chunkList = []
@@ -36,8 +42,32 @@ export default function EmployeesTable({ data, columns }) {
   const handleSearchChange = (e) => {
     const datas = data
       .slice()
-      .filter((employee) =>
-        employee.firstname.toLowerCase().includes(e.target.value.toLowerCase())
+      .filter(
+        (employee) =>
+          employee.firstname
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase()) ||
+          employee.lastname
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase()) ||
+          employee.dateOfBirth
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase()) ||
+          employee.startDate
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase()) ||
+          employee.street
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase()) ||
+          employee.city.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          employee.state.toLowerCase().includes(e.target.value.toLowerCase()) ||
+          employee.zip
+            .toString()
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase()) ||
+          employee.department
+            .toLowerCase()
+            .includes(e.target.value.toLowerCase())
       )
     setDisplayedData(datas)
     setCurrentPage(1)
@@ -54,32 +84,43 @@ export default function EmployeesTable({ data, columns }) {
   const disableNextButton =
     totalPages <= 1 || currentPage >= totalPages ? true : undefined
 
-  const tableStyle = {
-    width: '890px'
-  }
-
-  const headerStyle = {
-    verticalAlign: 'middle'
-  }
-
   return (
     <div>
-      <div>
-        <select onChange={onEntriesDisplayedChange} value={entriesDisplayed}>
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={10}>10</option>
-          <option value={25}>25</option>
-          <option value={50}>50</option>
-          <option value={100}>100</option>
-        </select>
+      <div className={styles.controlsBar}>
+        <div>
+          <label>
+            Show
+            <select
+              onChange={onEntriesDisplayedChange}
+              value={entriesDisplayed}
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={10}>10</option>
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+            </select>
+            entries
+          </label>
+        </div>
+        <div>
+          <label>
+            Search:
+            <input
+              type='text'
+              placeholder='Search'
+              onChange={handleSearchChange}
+            />
+          </label>
+        </div>
       </div>
-      <input type='text' placeholder='Search' onChange={handleSearchChange} />
-      <table style={tableStyle}>
-        <thead style={headerStyle}>
+      <table className={styles.table}>
+        <thead>
           <tr>
             {columns.map((column) => (
               <th
+                className={styles.th}
                 onClick={(e) => handleHeaderClick(e)}
                 key={column.accessor}
                 value={column.accessor}
@@ -95,7 +136,9 @@ export default function EmployeesTable({ data, columns }) {
               (row, idx) => (
                 <tr key={idx}>
                   {Object.values(row).map((cell, idx) => (
-                    <td key={idx}>{cell}</td>
+                    <td className={styles.td} key={idx}>
+                      {cell}
+                    </td>
                   ))}
                 </tr>
               )
@@ -107,15 +150,19 @@ export default function EmployeesTable({ data, columns }) {
           )}
         </tbody>
       </table>
-      <div>
-        <button disabled={disablePreviousButton} onClick={previousPage}>
-          Previous
-        </button>
-        <button disabled={disableNextButton} onClick={nextPage}>
-          Next
-        </button>
+      <div className={styles.paginationContainer}>
+        <div>{`Showing ${showingFirst} to ${showingLast} of ${totalEntries} entries`}</div>
+        <div>
+          <button disabled={disablePreviousButton} onClick={previousPage}>
+            Previous
+          </button>
+          <button>1</button>
+          <button>2</button>
+          <button disabled={disableNextButton} onClick={nextPage}>
+            Next
+          </button>
+        </div>
       </div>
-      <div>{`Showing ${currentPage} of ${totalPages} (${totalEntries} entries)`}</div>
     </div>
   )
 }

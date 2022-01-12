@@ -3,6 +3,8 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = require('react');
 var React__default = _interopDefault(React);
 
+var styles = {"table":"_styles-module__table__FnYjQ","th":"_styles-module__th__2MlMJ","td":"_styles-module__td__qcjXT","controlsBar":"_styles-module__controlsBar__vj6nK","paginationContainer":"_styles-module__paginationContainer__34dm0"};
+
 function EmployeesTable(_ref) {
   var data = _ref.data,
       columns = _ref.columns;
@@ -21,6 +23,8 @@ function EmployeesTable(_ref) {
 
   var totalEntries = displayedData.length;
   var totalPages = Math.ceil(totalEntries / entriesDisplayed);
+  var showingFirst = currentPage * entriesDisplayed - entriesDisplayed + 1;
+  var showingLast = showingFirst + parseInt(entriesDisplayed - 1) > totalEntries ? totalEntries : showingFirst + parseInt(entriesDisplayed - 1);
 
   var createDataChunks = function createDataChunks(chunkSize) {
     var chunkList = [];
@@ -52,7 +56,7 @@ function EmployeesTable(_ref) {
 
   var handleSearchChange = function handleSearchChange(e) {
     var datas = data.slice().filter(function (employee) {
-      return employee.firstname.toLowerCase().includes(e.target.value.toLowerCase());
+      return employee.firstname.toLowerCase().includes(e.target.value.toLowerCase()) || employee.lastname.toLowerCase().includes(e.target.value.toLowerCase()) || employee.dateOfBirth.toLowerCase().includes(e.target.value.toLowerCase()) || employee.startDate.toLowerCase().includes(e.target.value.toLowerCase()) || employee.street.toLowerCase().includes(e.target.value.toLowerCase()) || employee.city.toLowerCase().includes(e.target.value.toLowerCase()) || employee.state.toLowerCase().includes(e.target.value.toLowerCase()) || employee.zip.toString().toLowerCase().includes(e.target.value.toLowerCase()) || employee.department.toLowerCase().includes(e.target.value.toLowerCase());
     });
     setDisplayedData(datas);
     setCurrentPage(1);
@@ -64,13 +68,9 @@ function EmployeesTable(_ref) {
 
   var disablePreviousButton = totalPages <= 1 || currentPage <= 1 ? true : undefined;
   var disableNextButton = totalPages <= 1 || currentPage >= totalPages ? true : undefined;
-  var tableStyle = {
-    width: '890px'
-  };
-  var headerStyle = {
-    verticalAlign: 'middle'
-  };
-  return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("select", {
+  return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("div", {
+    className: styles.controlsBar
+  }, /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("label", null, "Show", /*#__PURE__*/React__default.createElement("select", {
     onChange: onEntriesDisplayedChange,
     value: entriesDisplayed
   }, /*#__PURE__*/React__default.createElement("option", {
@@ -85,16 +85,15 @@ function EmployeesTable(_ref) {
     value: 50
   }, "50"), /*#__PURE__*/React__default.createElement("option", {
     value: 100
-  }, "100"))), /*#__PURE__*/React__default.createElement("input", {
+  }, "100")), "entries")), /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("label", null, "Search:", /*#__PURE__*/React__default.createElement("input", {
     type: "text",
     placeholder: "Search",
     onChange: handleSearchChange
-  }), /*#__PURE__*/React__default.createElement("table", {
-    style: tableStyle
-  }, /*#__PURE__*/React__default.createElement("thead", {
-    style: headerStyle
-  }, /*#__PURE__*/React__default.createElement("tr", null, columns.map(function (column) {
+  })))), /*#__PURE__*/React__default.createElement("table", {
+    className: styles.table
+  }, /*#__PURE__*/React__default.createElement("thead", null, /*#__PURE__*/React__default.createElement("tr", null, columns.map(function (column) {
     return /*#__PURE__*/React__default.createElement("th", {
+      className: styles.th,
       onClick: function onClick(e) {
         return handleHeaderClick(e);
       },
@@ -106,16 +105,19 @@ function EmployeesTable(_ref) {
       key: idx
     }, Object.values(row).map(function (cell, idx) {
       return /*#__PURE__*/React__default.createElement("td", {
+        className: styles.td,
         key: idx
       }, cell);
     }));
-  }) : /*#__PURE__*/React__default.createElement("tr", null, /*#__PURE__*/React__default.createElement("td", null, "No matching records found")))), /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("button", {
+  }) : /*#__PURE__*/React__default.createElement("tr", null, /*#__PURE__*/React__default.createElement("td", null, "No matching records found")))), /*#__PURE__*/React__default.createElement("div", {
+    className: styles.paginationContainer
+  }, /*#__PURE__*/React__default.createElement("div", null, "Showing " + showingFirst + " to " + showingLast + " of " + totalEntries + " entries"), /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("button", {
     disabled: disablePreviousButton,
     onClick: previousPage
-  }, "Previous"), /*#__PURE__*/React__default.createElement("button", {
+  }, "Previous"), /*#__PURE__*/React__default.createElement("button", null, "1"), /*#__PURE__*/React__default.createElement("button", null, "2"), /*#__PURE__*/React__default.createElement("button", {
     disabled: disableNextButton,
     onClick: nextPage
-  }, "Next")), /*#__PURE__*/React__default.createElement("div", null, "Showing " + currentPage + " of " + totalPages + " (" + totalEntries + " entries)"));
+  }, "Next"))));
 }
 
 module.exports = EmployeesTable;
