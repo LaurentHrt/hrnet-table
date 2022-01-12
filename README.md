@@ -1,4 +1,4 @@
-# hrnet-employees-table
+# hrnet-table
 
 > Made with create-react-library
 
@@ -7,21 +7,57 @@
 ## Install
 
 ```bash
-npm install --save hrnet-employees-table
+npm install --save @laurenthrt/hrnet-table
 ```
 
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import EmployeeTable from '@laurenthrt/hrnet-table'
+import '@laurenthrt/hrnet-table/dist/index.css'
 
-import MyComponent from 'hrnet-employees-table'
-import 'hrnet-employees-table/dist/index.css'
+function Example() {
+  const employees = useSelector(selectEmployees)
+  const columns = [
+    {
+      Header: 'First Name',
+      accessor: 'firstname'
+    },
+    {
+      Header: 'Last Name',
+      accessor: 'lastname'
+    },
+    {
+      Header: 'Date Of Birth',
+      accessor: 'dateOfBirth'
+    },
+    {
+      Header: 'Start Date',
+      accessor: 'startDate'
+    },
+    {
+      Header: 'Street',
+      accessor: 'street'
+    },
+    {
+      Header: 'City',
+      accessor: 'city'
+    },
+    {
+      Header: 'State',
+      accessor: 'state'
+    },
+    {
+      Header: 'Zip Code',
+      accessor: 'zip'
+    },
+    {
+      Header: 'Department',
+      accessor: 'department'
+    }
+  ]
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+  return <EmployeeTable data={employees} columns={columns} />
 }
 ```
 
