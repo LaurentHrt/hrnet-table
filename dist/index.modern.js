@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-var styles = {"controlsContainer":"_styles-module__controlsContainer__2gR4P"};
-
 function EmployeesTable({
   data,
   columns
@@ -52,9 +50,13 @@ function EmployeesTable({
 
   const disablePreviousButton = totalPages <= 1 || currentPage <= 1 ? true : undefined;
   const disableNextButton = totalPages <= 1 || currentPage >= totalPages ? true : undefined;
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    className: styles.controlsContainer
-  }, /*#__PURE__*/React.createElement("select", {
+  const tableStyle = {
+    width: '890px'
+  };
+  const headerStyle = {
+    verticalAlign: 'middle'
+  };
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("select", {
     onChange: onEntriesDisplayedChange,
     value: entriesDisplayed
   }, /*#__PURE__*/React.createElement("option", {
@@ -73,7 +75,11 @@ function EmployeesTable({
     type: "text",
     placeholder: "Search",
     onChange: handleSearchChange
-  }), /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, columns.map(column => /*#__PURE__*/React.createElement("th", {
+  }), /*#__PURE__*/React.createElement("table", {
+    style: tableStyle
+  }, /*#__PURE__*/React.createElement("thead", {
+    style: headerStyle
+  }, /*#__PURE__*/React.createElement("tr", null, columns.map(column => /*#__PURE__*/React.createElement("th", {
     onClick: e => handleHeaderClick(e),
     key: column.accessor,
     value: column.accessor
@@ -87,7 +93,7 @@ function EmployeesTable({
   }, "Previous"), /*#__PURE__*/React.createElement("button", {
     disabled: disableNextButton,
     onClick: nextPage
-  }, "Next")), /*#__PURE__*/React.createElement("div", null, `Page ${currentPage} of ${totalPages} (${totalEntries} entries)`));
+  }, "Next")), /*#__PURE__*/React.createElement("div", null, `Showing ${currentPage} of ${totalPages} (${totalEntries} entries)`));
 }
 
 export default EmployeesTable;

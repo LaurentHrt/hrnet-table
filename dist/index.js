@@ -3,8 +3,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = require('react');
 var React__default = _interopDefault(React);
 
-var styles = {"controlsContainer":"_styles-module__controlsContainer__2gR4P"};
-
 function EmployeesTable(_ref) {
   var data = _ref.data,
       columns = _ref.columns;
@@ -66,9 +64,13 @@ function EmployeesTable(_ref) {
 
   var disablePreviousButton = totalPages <= 1 || currentPage <= 1 ? true : undefined;
   var disableNextButton = totalPages <= 1 || currentPage >= totalPages ? true : undefined;
-  return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("div", {
-    className: styles.controlsContainer
-  }, /*#__PURE__*/React__default.createElement("select", {
+  var tableStyle = {
+    width: '890px'
+  };
+  var headerStyle = {
+    verticalAlign: 'middle'
+  };
+  return /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("div", null, /*#__PURE__*/React__default.createElement("select", {
     onChange: onEntriesDisplayedChange,
     value: entriesDisplayed
   }, /*#__PURE__*/React__default.createElement("option", {
@@ -87,7 +89,11 @@ function EmployeesTable(_ref) {
     type: "text",
     placeholder: "Search",
     onChange: handleSearchChange
-  }), /*#__PURE__*/React__default.createElement("table", null, /*#__PURE__*/React__default.createElement("thead", null, /*#__PURE__*/React__default.createElement("tr", null, columns.map(function (column) {
+  }), /*#__PURE__*/React__default.createElement("table", {
+    style: tableStyle
+  }, /*#__PURE__*/React__default.createElement("thead", {
+    style: headerStyle
+  }, /*#__PURE__*/React__default.createElement("tr", null, columns.map(function (column) {
     return /*#__PURE__*/React__default.createElement("th", {
       onClick: function onClick(e) {
         return handleHeaderClick(e);
@@ -109,7 +115,7 @@ function EmployeesTable(_ref) {
   }, "Previous"), /*#__PURE__*/React__default.createElement("button", {
     disabled: disableNextButton,
     onClick: nextPage
-  }, "Next")), /*#__PURE__*/React__default.createElement("div", null, "Page " + currentPage + " of " + totalPages + " (" + totalEntries + " entries)"));
+  }, "Next")), /*#__PURE__*/React__default.createElement("div", null, "Showing " + currentPage + " of " + totalPages + " (" + totalEntries + " entries)"));
 }
 
 module.exports = EmployeesTable;
