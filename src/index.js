@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import styles from './styles.module.css'
 
 export default function EmployeesTable({ data, columns }) {
   const [currentPage, setCurrentPage] = useState(1)
@@ -55,9 +54,17 @@ export default function EmployeesTable({ data, columns }) {
   const disableNextButton =
     totalPages <= 1 || currentPage >= totalPages ? true : undefined
 
+  const tableStyle = {
+    width: '890px'
+  }
+
+  const headerStyle = {
+    verticalAlign: 'middle'
+  }
+
   return (
     <div>
-      <div className={styles.controlsContainer}>
+      <div>
         <select onChange={onEntriesDisplayedChange} value={entriesDisplayed}>
           <option value={1}>1</option>
           <option value={2}>2</option>
@@ -68,8 +75,8 @@ export default function EmployeesTable({ data, columns }) {
         </select>
       </div>
       <input type='text' placeholder='Search' onChange={handleSearchChange} />
-      <table>
-        <thead>
+      <table style={tableStyle}>
+        <thead style={headerStyle}>
           <tr>
             {columns.map((column) => (
               <th
@@ -108,7 +115,7 @@ export default function EmployeesTable({ data, columns }) {
           Next
         </button>
       </div>
-      <div>{`Page ${currentPage} of ${totalPages} (${totalEntries} entries)`}</div>
+      <div>{`Showing ${currentPage} of ${totalPages} (${totalEntries} entries)`}</div>
     </div>
   )
 }
