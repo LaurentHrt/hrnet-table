@@ -80,6 +80,7 @@ export default function EmployeesTable({ data, columns }) {
         <button
           disabled={currentPage === i ? true : undefined}
           onClick={() => setCurrentPage(i)}
+          key={i}
         >
           {i}
         </button>
@@ -164,7 +165,6 @@ export default function EmployeesTable({ data, columns }) {
           <button disabled={disablePreviousButton} onClick={previousPage}>
             Previous
           </button>
-          {}
           {createPaginationButtons(totalPages)}
           <button disabled={disableNextButton} onClick={nextPage}>
             Next
