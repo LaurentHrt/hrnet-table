@@ -73,12 +73,6 @@ export default function EmployeesTable({ data, columns }) {
     setCurrentPage(1)
   }
 
-  const handleHeaderClick = (e) => {
-    console.log(e.target.attributes.value.value)
-    // const datas = displayedData.slice().sort((a, b) => a.zip - b.zip)
-    // setDisplayedData(datas)
-  }
-
   const createPaginationButtons = (pageNumber) => {
     const buttons = []
     for (let i = 1; i <= totalPages; i++) {
@@ -136,7 +130,6 @@ export default function EmployeesTable({ data, columns }) {
             {columns.map((column) => (
               <th
                 className={styles.th}
-                onClick={(e) => handleHeaderClick(e)}
                 key={column.accessor}
                 value={column.accessor}
               >

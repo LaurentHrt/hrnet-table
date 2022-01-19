@@ -59,10 +59,6 @@ function EmployeesTable(_ref) {
     setCurrentPage(1);
   };
 
-  var handleHeaderClick = function handleHeaderClick(e) {
-    console.log(e.target.attributes.value.value);
-  };
-
   var createPaginationButtons = function createPaginationButtons(pageNumber) {
     var buttons = [];
 
@@ -110,9 +106,6 @@ function EmployeesTable(_ref) {
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, columns.map(function (column) {
     return /*#__PURE__*/React.createElement("th", {
       className: styles.th,
-      onClick: function onClick(e) {
-        return handleHeaderClick(e);
-      },
       key: column.accessor,
       value: column.accessor
     }, column.Header);
