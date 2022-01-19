@@ -5,6 +5,8 @@ export default function EmployeesTable({ data, columns }) {
   const [currentPage, setCurrentPage] = useState(1)
   const [entriesDisplayed, setEntriesDisplayed] = useState(10)
   const [displayedData, setDisplayedData] = useState(data)
+  const [sort, setSort] = useState('')
+  const [sortType, setSortType] = useState('')
   const totalEntries = displayedData.length
   const totalPages = Math.ceil(totalEntries / entriesDisplayed)
   const showingFirst = currentPage * entriesDisplayed - entriesDisplayed + 1
@@ -27,6 +29,42 @@ export default function EmployeesTable({ data, columns }) {
     setCurrentPage(1)
   }
 
+  const onClickHeader = (e, column) => {
+    setCurrentPage(1)
+
+    if (sort === column) {
+      if (sortType === '') {
+        setDisplayedData(
+          displayedData.slice().sort((a, b) => {
+            if (a[column] > b[column]) return 1
+            else return -1
+          })
+        )
+        setSortType('DESC')
+        return
+      } else if (sortType === 'DESC') {
+        setDisplayedData(displayedData.slice().reverse())
+        setSortType('ASC')
+        return
+      } else {
+        setDisplayedData(data)
+        setSortType('')
+        setSort('')
+        return
+      }
+    } else {
+      setDisplayedData(
+        displayedData.slice().sort((a, b) => {
+          if (a[column] > b[column]) return 1
+          else return -1
+        })
+      )
+      setSortType('DESC')
+    }
+
+    setSort(column)
+  }
+
   const previousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1)
@@ -38,6 +76,9 @@ export default function EmployeesTable({ data, columns }) {
       setCurrentPage(currentPage + 1)
     }
   }
+
+  console.log(sort)
+  console.log(sortType)
 
   const handleSearchChange = (e) => {
     const datas = data
@@ -133,8 +174,18 @@ export default function EmployeesTable({ data, columns }) {
                 className={styles.th}
                 key={column.accessor}
                 value={column.accessor}
+                onClick={(e, value) => onClickHeader(e, column.accessor)}
               >
                 {column.Header}
+                {sort !== column.accessor && (
+                  <span className={styles.arrow}>↕</span>
+                )}
+                {sort === column.accessor && sortType === 'ASC' && (
+                  <span className={styles.arrow}>↑</span>
+                )}
+                {sort === column.accessor && sortType === 'DESC' && (
+                  <span className={styles.arrow}>↓</span>
+                )}
               </th>
             ))}
           </tr>

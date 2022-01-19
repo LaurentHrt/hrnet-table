@@ -3,7 +3,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var React = require('react');
 var React__default = _interopDefault(React);
 
-var styles = {"table":"_FnYjQ","th":"_2MlMJ","td":"_qcjXT","tr":"_kcP3k","controlsBar":"_vj6nK","paginationContainer":"_34dm0"};
+var styles = {"table":"_styles-module__table__FnYjQ","th":"_styles-module__th__2MlMJ","td":"_styles-module__td__qcjXT","tr":"_styles-module__tr__kcP3k","controlsBar":"_styles-module__controlsBar__vj6nK","paginationContainer":"_styles-module__paginationContainer__34dm0","arrow":"_styles-module__arrow__35l6Q"};
 
 function EmployeesTable(_ref) {
   var data = _ref.data,
@@ -20,6 +20,14 @@ function EmployeesTable(_ref) {
   var _useState3 = React.useState(data),
       displayedData = _useState3[0],
       setDisplayedData = _useState3[1];
+
+  var _useState4 = React.useState(''),
+      sort = _useState4[0],
+      setSort = _useState4[1];
+
+  var _useState5 = React.useState(''),
+      sortType = _useState5[0],
+      setSortType = _useState5[1];
 
   var totalEntries = displayedData.length;
   var totalPages = Math.ceil(totalEntries / entriesDisplayed);
@@ -42,6 +50,36 @@ function EmployeesTable(_ref) {
     setCurrentPage(1);
   };
 
+  var onClickHeader = function onClickHeader(e, column) {
+    setCurrentPage(1);
+
+    if (sort === column) {
+      if (sortType === '') {
+        setDisplayedData(displayedData.slice().sort(function (a, b) {
+          if (a[column] > b[column]) return 1;else return -1;
+        }));
+        setSortType('DESC');
+        return;
+      } else if (sortType === 'DESC') {
+        setDisplayedData(displayedData.slice().reverse());
+        setSortType('ASC');
+        return;
+      } else {
+        setDisplayedData(data);
+        setSortType('');
+        setSort('');
+        return;
+      }
+    } else {
+      setDisplayedData(displayedData.slice().sort(function (a, b) {
+        if (a[column] > b[column]) return 1;else return -1;
+      }));
+      setSortType('DESC');
+    }
+
+    setSort(column);
+  };
+
   var previousPage = function previousPage() {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -53,6 +91,9 @@ function EmployeesTable(_ref) {
       setCurrentPage(currentPage + 1);
     }
   };
+
+  console.log(sort);
+  console.log(sortType);
 
   var handleSearchChange = function handleSearchChange(e) {
     var datas = data.slice().filter(function (employee) {
@@ -70,7 +111,8 @@ function EmployeesTable(_ref) {
         disabled: currentPage === i ? true : undefined,
         onClick: function onClick() {
           return setCurrentPage(i);
-        }
+        },
+        key: i
       }, i));
     };
 
@@ -110,8 +152,17 @@ function EmployeesTable(_ref) {
     return /*#__PURE__*/React__default.createElement("th", {
       className: styles.th,
       key: column.accessor,
-      value: column.accessor
-    }, column.Header);
+      value: column.accessor,
+      onClick: function onClick(e, value) {
+        return onClickHeader(e, column.accessor);
+      }
+    }, column.Header, sort !== column.accessor && /*#__PURE__*/React__default.createElement("span", {
+      className: styles.arrow
+    }, "\u2195"), sort === column.accessor && sortType === 'ASC' && /*#__PURE__*/React__default.createElement("span", {
+      className: styles.arrow
+    }, "\u2191"), sort === column.accessor && sortType === 'DESC' && /*#__PURE__*/React__default.createElement("span", {
+      className: styles.arrow
+    }, "\u2193"));
   }))), /*#__PURE__*/React__default.createElement("tbody", null, displayedData.length > 0 ? createDataChunks(entriesDisplayed)[currentPage - 1].map(function (row, idx) {
     return /*#__PURE__*/React__default.createElement("tr", {
       className: styles.tr,

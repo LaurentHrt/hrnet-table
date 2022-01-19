@@ -12,6 +12,10 @@
 .th {
   padding: 10px 18px;
   border-bottom: 1px solid #111;
+  cursor: pointer;
+}
+.th:hover {
+  /* text-decoration: underline; */
 }
 
 .td {
@@ -35,4 +39,13 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+}
+
+.arrow {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.arrow:hover {
+  text-decoration: none;
 }
