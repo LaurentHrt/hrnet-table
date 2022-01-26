@@ -1,5 +1,14 @@
 import React, { useState } from 'react'
 import styles from './styles.module.css'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import { styled } from '@mui/material'
+import red from '@mui/material/colors/red'
+import grey from '@mui/material/colors/grey'
 
 export default function EmployeesTable({ data, columns }) {
   const [currentPage, setCurrentPage] = useState(1)
@@ -77,9 +86,6 @@ export default function EmployeesTable({ data, columns }) {
     }
   }
 
-  console.log(sort)
-  console.log(sortType)
-
   const handleSearchChange = (e) => {
     const datas = data
       .slice()
@@ -118,13 +124,13 @@ export default function EmployeesTable({ data, columns }) {
     const buttons = []
     for (let i = 1; i <= totalPages; i++) {
       buttons.push(
-        <button
+        <ColorButton
           disabled={currentPage === i ? true : undefined}
           onClick={() => setCurrentPage(i)}
           key={i}
         >
           {i}
-        </button>
+        </ColorButton>
       )
     }
     return buttons
@@ -135,35 +141,45 @@ export default function EmployeesTable({ data, columns }) {
   const disableNextButton =
     totalPages <= 1 || currentPage >= totalPages ? true : undefined
 
+  const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(red[900]),
+    backgroundColor: red[900],
+    '&:hover': {
+      backgroundColor: red[700]
+    },
+    '&:disabled': {
+      backgroundColor: grey[500]
+    }
+  }))
+
   return (
     <div>
       <div className={styles.controlsBar}>
+        <FormControl variant='standard' sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id='Entries'>Entries per page</InputLabel>
+          <Select
+            name='Entries'
+            labelId='Entries'
+            label='Entries per page'
+            onChange={onEntriesDisplayedChange}
+            value={entriesDisplayed}
+          >
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={25}>25</MenuItem>
+            <MenuItem value={50}>50</MenuItem>
+            <MenuItem value={100}>100</MenuItem>
+          </Select>
+        </FormControl>
+
         <div>
-          <label>
-            Show
-            <select
-              onChange={onEntriesDisplayedChange}
-              value={entriesDisplayed}
-            >
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={10}>10</option>
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
-            </select>
-            entries
-          </label>
-        </div>
-        <div>
-          <label>
-            Search:
-            <input
-              type='text'
-              placeholder='Search'
-              onChange={handleSearchChange}
-            />
-          </label>
+          <TextField
+            fullWidth
+            name='Search'
+            id='Search'
+            onChange={handleSearchChange}
+            label='Search'
+            variant='outlined'
+          />
         </div>
       </div>
       <table className={styles.table}>
@@ -212,14 +228,14 @@ export default function EmployeesTable({ data, columns }) {
       </table>
       <div className={styles.paginationContainer}>
         <div>{`Showing ${showingFirst} to ${showingLast} of ${totalEntries} entries`}</div>
-        <div>
-          <button disabled={disablePreviousButton} onClick={previousPage}>
+        <div className={styles.paginationButtonsContainer}>
+          <ColorButton disabled={disablePreviousButton} onClick={previousPage}>
             Previous
-          </button>
+          </ColorButton>
           {createPaginationButtons(totalPages)}
-          <button disabled={disableNextButton} onClick={nextPage}>
+          <ColorButton disabled={disableNextButton} onClick={nextPage}>
             Next
-          </button>
+          </ColorButton>
         </div>
       </div>
     </div>
